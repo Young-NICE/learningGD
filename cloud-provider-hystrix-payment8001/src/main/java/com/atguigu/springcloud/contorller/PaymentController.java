@@ -19,7 +19,7 @@ import javax.annotation.Resource;
 @Slf4j
 public class PaymentController {
     @Resource
-    private PaymentService paymentService;
+    private PaymentServiceImpl paymentService;
 
     @Value("${server.port}")
     private String serverPort;
@@ -38,4 +38,12 @@ public class PaymentController {
         return result;
     }
 
+
+    //服务熔断
+    @GetMapping("/payment/circuit/{id}")
+    public String paymentCIrcuitBreaker(@PathVariable("id") Integer id){
+        String result = paymentService.paymentCircuitBreaker(id);
+        log.info("*******result:"+result);
+        return result;
+    }
 }
